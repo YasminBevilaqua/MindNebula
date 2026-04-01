@@ -1,0 +1,195 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 262 22% 5%;
+    --foreground: 0 0% 100%;
+
+    --card: 262 18% 8%;
+    --card-foreground: 0 0% 100%;
+
+    --popover: 262 18% 8%;
+    --popover-foreground: 0 0% 100%;
+
+    --primary: 255 100% 62%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 262 16% 12%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 262 12% 14%;
+    --muted-foreground: 262 8% 65%;
+
+    --accent: 265 100% 58%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 262 12% 18%;
+    --input: 262 12% 18%;
+    --ring: 255 100% 62%;
+
+    --radius: 0.75rem;
+
+    /* Violeta-azulado: um pouco de azul, sem perder o roxo */
+    --neon-blue: 274 90% 58%;
+    --neon-magenta: 292 92% 58%;
+    --neon-purple: 262 100% 68%;
+
+    --gradient-primary: linear-gradient(135deg, hsl(260 100% 61%), hsl(270 93% 58%), hsl(285 78% 51%));
+    --gradient-glow: linear-gradient(135deg, hsl(260 100% 61% / 0.42), hsl(282 88% 56% / 0.38));
+
+    --sidebar-background: 262 20% 6%;
+    --sidebar-foreground: 0 0% 100%;
+    --sidebar-primary: 255 100% 62%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 262 16% 12%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 262 12% 18%;
+    --sidebar-ring: 255 100% 62%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    height: 100%;
+    -webkit-text-size-adjust: 100%;
+    /* Evita faixa clara à direita (canvas/viewport) e match com o fundo WebGL */
+    background-color: hsl(262 22% 5%);
+    color-scheme: dark;
+    overflow-x: clip;
+    scrollbar-color: hsl(262 16% 28%) hsl(262 22% 8%);
+  }
+
+  body {
+    @apply bg-background text-foreground font-body antialiased;
+    min-height: 100%;
+    min-height: 100dvh;
+    min-height: 100svh;
+    min-height: -webkit-fill-available;
+    overflow-x: clip;
+  }
+
+  #root {
+    min-height: 100%;
+    min-height: 100dvh;
+    min-height: 100svh;
+    min-height: -webkit-fill-available;
+    overflow-x: clip;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading tracking-tight;
+  }
+}
+
+@layer components {
+  .gradient-text {
+    @apply bg-clip-text text-transparent;
+    background-image: var(--gradient-primary);
+  }
+
+  .gradient-border {
+    position: relative;
+    background: hsl(var(--card));
+    border-radius: var(--radius);
+  }
+
+  .gradient-border::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: var(--gradient-primary);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+
+  .glow-button {
+    @apply relative overflow-hidden transition-all duration-300;
+    box-shadow: 0 0 20px hsl(var(--primary) / 0.3);
+  }
+
+  .glow-button:hover {
+    box-shadow: 0 0 40px hsl(var(--primary) / 0.6), 0 0 80px hsl(var(--neon-magenta) / 0.3);
+    transform: translateY(-2px);
+  }
+
+  .card-hover {
+    @apply transition-all duration-300;
+  }
+
+  .card-hover:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 60px hsl(var(--primary) / 0.15);
+  }
+
+  .neon-input {
+    @apply transition-all duration-300;
+  }
+
+  .neon-input:focus {
+    box-shadow: 0 0 0 2px hsl(var(--primary) / 0.5), 0 0 30px hsl(var(--primary) / 0.2);
+  }
+
+  .particle {
+    @apply absolute rounded-full opacity-20;
+    background: hsl(var(--primary));
+    animation: float linear infinite;
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0) translateX(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.3;
+  }
+  90% {
+    opacity: 0.1;
+  }
+  50% {
+    transform: translateY(-100vh) translateX(50px);
+    opacity: 0.2;
+  }
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 20px hsl(var(--primary) / 0.3);
+  }
+  50% {
+    box-shadow: 0 0 40px hsl(var(--primary) / 0.6);
+  }
+}
+
+@keyframes typewriter {
+  from { width: 0; }
+  to { width: 100%; }
+}
